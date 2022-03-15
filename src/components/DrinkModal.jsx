@@ -2,7 +2,7 @@ import { Modal, Image } from "react-bootstrap"
 import useDrinks from "../hooks/useDrinks"
 
 const DrinkModal = () => {
-  const { modal, handleModalClick, recipe, loading } = useDrinks()
+  const { modal, handleModalClick, recipe, loadingRecipe } = useDrinks()
 
   const showIngredients = () => {
     let ingredients = []
@@ -21,7 +21,7 @@ const DrinkModal = () => {
   }
 
   return (
-    !loading && (
+    !loadingRecipe && (
       <Modal show={modal} onHide={handleModalClick}>
         <Image src={recipe.strDrinkThumb} alt={`Image of ${recipe.strDrink}`} />
 

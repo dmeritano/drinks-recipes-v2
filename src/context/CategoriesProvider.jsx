@@ -4,8 +4,6 @@ import axios from "axios"
 const CategoriesContext = createContext()
 
 const CategoriesProvider = ({ children }) => {
-
-
   const [categories, setCategories] = useState([])
 
   const getCategories = async () => {
@@ -14,13 +12,11 @@ const CategoriesProvider = ({ children }) => {
         import.meta.env.VITE_APP_DRINKS_URL_API_BASE
       }list.php?c=list`
 
-      
       const { data } = await axios.get(url)
 
       if (data?.drinks?.length > 0) {
-        setCategories(data.drinks)        
+        setCategories(data.drinks)
       }
-      
     } catch (error) {
       console.log(error)
     }
@@ -28,12 +24,12 @@ const CategoriesProvider = ({ children }) => {
 
   useEffect(() => {
     getCategories()
-  },[])
+  }, [])
 
   return (
-    <CategoriesContext.Provider 
+    <CategoriesContext.Provider
       value={{
-        categories
+        categories,
       }}
     >
       {children}

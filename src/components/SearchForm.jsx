@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react"
 import { Button, Form, Row, Col, Alert } from "react-bootstrap"
 import useCategories from "../hooks/useCategories"
 import useDrinks from "../hooks/useDrinks"
@@ -9,29 +9,29 @@ const SearchForm = () => {
 
   //Local state
   const [searchFields, setSearchFields] = useState({
-    ingredient:'',
-    category:''
+    ingredient: "",
+    category: "",
   })
-  const [alert, setAlert] = useState('')
-  
-  const handleSubmit = evt => {
+  const [alert, setAlert] = useState("")
+
+  const handleSubmit = (evt) => {
     evt.preventDefault()
-    
-    if (Object.values(searchFields).includes('')){
+
+    if (Object.values(searchFields).includes("")) {
       setAlert("All fields are required. Try it again!")
       return
     }
-    setAlert('')
-    getDrinks(searchFields)
-  
+    setAlert("")
+    getDrinks(searchFields, false)
   }
 
-
   return (
-    <Form
-      onSubmit={handleSubmit}
-    >
-      {alert && <Alert variant='danger' className='py-1'>{alert}</Alert>}
+    <Form onSubmit={handleSubmit}>
+      {alert && (
+        <Alert variant='danger' className='py-1'>
+          {alert}
+        </Alert>
+      )}
       <Row>
         <Col md={6}>
           <Form.Group className='mb-3'>
@@ -43,10 +43,12 @@ const SearchForm = () => {
               placeholder='e.g. Ron'
               name='ingredient'
               value={searchFields.ingredient}
-              onChange={evt => setSearchFields({
-                ...searchFields,
-                [evt.target.name] : evt.target.value
-              })}
+              onChange={(evt) =>
+                setSearchFields({
+                  ...searchFields,
+                  [evt.target.name]: evt.target.value,
+                })
+              }
             />
           </Form.Group>
         </Col>
@@ -60,11 +62,12 @@ const SearchForm = () => {
               placeholder='e.g. Ron'
               name='category'
               value={searchFields.category}
-              onChange={evt => setSearchFields({
-                ...searchFields,
-                [evt.target.name] : evt.target.value
-              })}
-
+              onChange={(evt) =>
+                setSearchFields({
+                  ...searchFields,
+                  [evt.target.name]: evt.target.value,
+                })
+              }
             >
               <option value=''>--Select category--</option>
               {categories.map((category) => (
@@ -79,11 +82,9 @@ const SearchForm = () => {
 
       <Row className='justify-content-end'>
         <Col md={2}>
-          <Button 
-            variant='dark'
-            className='w-100'
-            type='submit'
-          >Search!!</Button>
+          <Button variant='dark' className='w-100' type='submit'>
+            Search!!
+          </Button>
         </Col>
       </Row>
     </Form>

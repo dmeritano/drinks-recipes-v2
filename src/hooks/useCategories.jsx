@@ -1,8 +1,8 @@
-import { useContext } from 'react'
-import CategoriesContext from '../context/CategoriesProvider'
+import { useContext } from "react"
+import CategoriesContext from "../context/CategoriesProvider"
 
 const useCategories = () => {
-    return useContext(CategoriesContext)
+  return useContext(CategoriesContext)
 }
 
 export default useCategories

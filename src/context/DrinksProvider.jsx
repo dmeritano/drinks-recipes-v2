@@ -4,58 +4,74 @@ import axios from "axios"
 const DrinksContext = createContext()
 
 const DrinksProvider = ({ children }) => {
-
   const [drinks, setDrinks] = useState([])
   const [modal, setModal] = useState(false)
   const [drinkId, setDrinkId] = useState(null)
   const [recipe, setRecipe] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [loadingRecipe, setLoadingRecipe] = useState(false)
 
+  const [favDrinksList, setFavDrinksList] = useState([])
 
-  useEffect( () => {    
-    setLoading(true)
+  useEffect(() => {
+    setLoadingRecipe(true)
     const getRecipe = async () => {
       if (!drinkId) return //null
 
       try {
         const url = `${
           import.meta.env.VITE_APP_DRINKS_URL_API_BASE
-        }lookup.php?i=${drinkId}` 
+        }lookup.php?i=${drinkId}`
         const { data } = await axios.get(url)
         if (data?.drinks?.length > 0) {
           setRecipe(data.drinks[0])
-        }        
+        }
       } catch (error) {
         console.log(error)
       } finally {
-        setLoading(false)
+        setLoadingRecipe(false)
       }
-
     }
     getRecipe()
+  }, [drinkId])
 
-  },[drinkId])
+  useEffect(() => {
+    const getLocalStorageFavs = () => {
+      const lsFavs =
+        JSON.parse(localStorage.getItem("drinks-recipes-favs")) ?? []
+      setFavDrinksList(lsFavs)
+    }
+    getLocalStorageFavs()
+  }, [])
 
-  const getDrinks = async searchData => {
+  useEffect(() => {
+    localStorage.setItem("drinks-recipes-favs", JSON.stringify(favDrinksList))
+  }, [favDrinksList])
+
+  const getDrinks = async (searchData, showFavs) => {
+    //showFavs == true means show faved drinks instead of performing a new request to de API
     try {
-      const url = `${
-        import.meta.env.VITE_APP_DRINKS_URL_API_BASE
-      }filter.php?i=${searchData.ingredient}&c=${searchData.category}`
+      if (!showFavs) {
+        const url = `${
+          import.meta.env.VITE_APP_DRINKS_URL_API_BASE
+        }filter.php?i=${searchData.ingredient}&c=${searchData.category}`
 
-      const { data } = await axios.get(url)
-      if (data?.drinks?.length > 0) {
-        setDrinks(data.drinks)
+        const { data } = await axios.get(url)
+        if (data?.drinks?.length > 0) {
+          setDrinks(data.drinks)
+        }
+      } else {
+        setDrinks(favDrinksList)
       }
     } catch (error) {
       console.log(error)
     }
   }
 
-  const handleModalClick =  () => {
+  const handleModalClick = () => {
     setModal(!modal)
   }
 
-  const handleDrinkIdClick = id => {
+  const handleDrinkIdClick = (id) => {
     setDrinkId(id)
   }
 
@@ -68,7 +84,9 @@ const DrinksProvider = ({ children }) => {
         modal,
         handleDrinkIdClick,
         recipe,
-        loading
+        loadingRecipe,
+        favDrinksList,
+        setFavDrinksList,
       }}
     >
       {children}
