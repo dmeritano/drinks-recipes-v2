@@ -4,6 +4,8 @@
 
 Application created with the purpose of continuing to learn how to use the Context API, and React in general.
 
+Query public API to obtain drinks by ingredient and category
+
 Added extra functionality to set/unset favorite drinks and to saved them in localstorage
 
 ### APP INSIGHTS
