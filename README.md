@@ -1,5 +1,7 @@
 ### DRINKS RECIPES APP v2
 
+<u>**Deployed application URL**</u> [Drinks Finder](https://dmeritano-drinks-finder.netlify.app)
+
 **React APP** - *Vite*
 
 Application created with the purpose of continuing to learn how to use the Context API, and React in general.
@@ -20,3 +22,4 @@ Added extra functionality to set/unset favorite drinks and to saved them in loca
 ### ENVIRONMENT VARIABLES
 
 `VITE_APP_DRINKS_URL_API_BASE`=https://www.thecocktaildb.com/api/json/v1/1/
+

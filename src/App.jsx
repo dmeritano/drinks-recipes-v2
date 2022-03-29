@@ -7,6 +7,7 @@ import { CategoriesProvider } from "./context/CategoriesProvider"
 import { DrinksProvider } from "./context/DrinksProvider"
 
 function App() {
+
   return (
     <CategoriesProvider>
       <DrinksProvider>
