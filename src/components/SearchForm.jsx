@@ -18,7 +18,7 @@ const SearchForm = () => {
     evt.preventDefault()
 
     if (Object.values(searchFields).includes("")) {
-      setAlert("All fields are required. Try it again!")
+      setAlert("All fields are required, try it again!")
       return
     }
     setAlert("")
